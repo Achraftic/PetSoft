@@ -1,6 +1,7 @@
 import Background from '@/components/app/background'
 import Footer from '@/components/app/footer'
 import Header from '@/components/app/header'
+import { Toaster } from '@/components/ui/toaster'
 import React from 'react'
 
 export default function Applayout({ children }: { children: React.ReactNode }) {
@@ -12,7 +13,7 @@ export default function Applayout({ children }: { children: React.ReactNode }) {
                 {children}
                 <Footer/>
             </div>
-
+            <Toaster />
         </>
     )
 }

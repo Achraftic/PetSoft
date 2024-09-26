@@ -5,7 +5,7 @@ export default function Applayout({ children }: { children: React.ReactNode }) {
     return (
         <>
             <div className=' min-h-screen   grid place-items-center  w-full  mx-auto p-4 '>
-                <div className='max-w-3xl shadow-2xl  shadow-background bg-zinc-50/50   grid w-full rounded-lg    sm:grid-cols-2  grid-cols-1 min-h-[60vh]  '>
+                <div className='max-w-3xl shadow-2xl  shadow-background bg-zinc-50/50   grid w-full rounded-lg    sm:grid-cols-2  grid-cols-1 min-h-max  '>
 
                     {children}
 

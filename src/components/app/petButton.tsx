@@ -1,11 +1,12 @@
 'use client'
-import React, { useEffect } from 'react'
+// import React, { useEffect } from 'react'
 import { Button } from '../ui/button'
 import DialogueUi from './DialogueUi'
 import { usePetStore } from '@/store/pet_store'
 import { deletePet } from '@/actions/petActions'
-import { useRouter } from 'next/navigation'
+// import { useRouter } from 'next/navigation'
 import { Pet } from '@prisma/client'
+import { useTransition } from 'react'
 
 
 type PetButtonProps = {
@@ -16,18 +17,23 @@ type PetButtonProps = {
 export default function PetButton({ actionType = "edit" ,id,selectedPet}: PetButtonProps) {
 
     const { setSelectedPet } = usePetStore()
-    useEffect(() => {
-        if (selectedPet) {
-          setSelectedPet(selectedPet)
-        }
-      }, [selectedPet, setSelectedPet])
+    const [isPending,StartTransition] = useTransition()
+    // useEffect(() => {
+    //     if (selectedPet) {
+    //       setSelectedPet(selectedPet)
+    //     }
+    //   }, [selectedPet, setSelectedPet])
     
     
-      const router = useRouter()
+    //   const router = useRouter()
     const handlecheckout = async () => {
         if(id){
-            await deletePet(id as string)
-            router.push("/dashboard")
+            StartTransition(async () => {
+                await deletePet(id as string)
+                setSelectedPet(selectedPet as Pet)
+                
+            })
+           
         }
     }
   
@@ -39,7 +45,7 @@ export default function PetButton({ actionType = "edit" ,id,selectedPet}: PetBut
     
     return (
         
-        <Button aria-label='checkout' onClick={handlecheckout} className='rounded-full  md:px-5 ' size="sm"> Checkout</Button>
+        <Button disabled={isPending} aria-label='checkout' onClick={handlecheckout} className='rounded-full  md:px-5 ' size="sm"> Checkout</Button>
     )
 }
 

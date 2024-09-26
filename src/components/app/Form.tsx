@@ -7,6 +7,8 @@ import { usePetStore } from '@/store/pet_store'
 import { addPet, editPet } from '@/actions/petActions'
 import Submit from './Submit'
 import {z} from"zod"
+import { useToast } from "@/hooks/use-toast"
+
 
 type FormProps = {
     onFormSubmission: () => void
@@ -25,7 +27,7 @@ export default function Form({ onFormSubmission, type }: FormProps) {
 
 
     const [errors, setErrors] = useState<Record<string, string | string[]>>({});
-
+    const { toast } = useToast()
     const { selectedPet } = usePetStore()
     const handleSubmit = async (formdata: FormData) => {
         const data={
@@ -36,13 +38,22 @@ export default function Form({ onFormSubmission, type }: FormProps) {
             notes:formdata.get('notes') as string
         }
         const valided = schemaPetform.safeParse(data)
+
         if (!valided.success) {
             setErrors(valided.error.format())
+            toast({
+                variant:"destructive",
+                description: "Friday, February 10, 2023 at 5:57 PM",
+              })
             return
         }
 
         if (type === "edit") {
             const result=await editPet(formdata, selectedPet?.id as string)
+            toast({
+                variant: "success",
+                description: "Friday, February 10, 2023 at 5:57 PM",
+              })
               
         }
         else {
@@ -53,7 +64,7 @@ export default function Form({ onFormSubmission, type }: FormProps) {
 
 
     return (
-        <form action={handleSubmit} className="grid grid-cols-2 gap-4 py-4 text-sm">
+        <form action={handleSubmit} className="grid  grid-cols-2 gap-4 py-4 text-sm">
             <div className="grid grid-cols-1 items-center gap-2">
                 <Label htmlFor="name" className="">
                     Name
