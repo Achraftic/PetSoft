@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+    --background-color: #E2DFD0;
+    --secondary-color: #32012F;
+    --primary-color: #F97300;
+    --focus-color: #524C42;
+    --light-color: #EEEEEE;
+  }
+
+  .theme-2 {
+    /* Alternate Theme (Theme 2) */
+    --background-color: #F5F7FA;
+    --secondary-color: #1F2937;
+    --primary-color: #4F46E5;
+    --focus-color: #60A5FA;
+    --light-color: #FFFFFF;
+  }
+}
